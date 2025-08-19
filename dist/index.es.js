@@ -12,7 +12,11 @@ const m = (n, t = !1) => {
 }, C = (n) => {
   i.push(n);
 }, G = (n) => {
-  n ? i.splice(i.indexOf(n), 1) : i.pop();
+  if (!n) i.pop();
+  else {
+    let t = i.indexOf(n);
+    t > -1 && i.splice(t, 1);
+  }
 }, O = () => {
   i = [];
 }, S = (n, t = {}) => {

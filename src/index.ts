@@ -23,7 +23,8 @@ export const lock = (target:any) => {
 export const unlock = (target?:any) => {
   if (!target) lockedStack.pop();
   else {
-    lockedStack.splice(lockedStack.indexOf(target), 1);
+    let index = lockedStack.indexOf(target);
+    if (index > -1) lockedStack.splice(index, 1);
   }
 }
 
