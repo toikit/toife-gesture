@@ -1,0 +1,24 @@
+{
+  "name": "@toife/gesture",
+  "version": "1.0.0",
+  "description": "Gesture for DOM using JS",
+  "type": "module",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "toife",
+    "gesture"
+  ],
+  "author": "Toikit",
+  "license": "MIT",
+  "scripts": {
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "vite": "^7.0.6",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}
