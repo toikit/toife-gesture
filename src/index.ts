@@ -1,14 +1,14 @@
-let lockedStack:any = [];
+let targetStack:any = [];
 
-export const isGesturable = (e:any, last:boolean = false) => {
-  if (lockedStack.length == 0) return true;
+export const isGesturable = (target:any, last:boolean = false) => {
+  if (targetStack.length == 0) return true;
   if (last) {
-    let l = lockedStack[lockedStack.length - 1];
-    return e.target === l || l.contains(e.target);
+    let l = targetStack[targetStack.length - 1];
+    return target === l || l.contains(target);
   }
 
-  for (let item of lockedStack) {
-    if (e.target === item ||  item.contains(e.target)) {
+  for (let item of targetStack) {
+    if (target === item ||  item.contains(target)) {
       return true;
     }
   }
@@ -16,20 +16,20 @@ export const isGesturable = (e:any, last:boolean = false) => {
   return false;
 }
 
-export const lock = (target:any) => {
-  lockedStack.push(target);
+export const scope = (target:any) => {
+  targetStack.push(target);
 }
 
-export const unlock = (target?:any) => {
-  if (!target) lockedStack.pop();
+export const descope = (target?:any) => {
+  if (!target) targetStack.pop();
   else {
-    let index = lockedStack.indexOf(target);
-    if (index > -1) lockedStack.splice(index, 1);
+    let index = targetStack.indexOf(target);
+    if (index > -1) targetStack.splice(index, 1);
   }
 }
 
-export const unlockAll = () => {
-  lockedStack = [];
+export const descopeAll = () => {
+  targetStack = [];
 }
 
 export const gesture = (box: EventTarget, handle: any = {}) => {
@@ -42,7 +42,6 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
 
   // ==== HANDLERS ==== //
   const onDown:any = (e: PointerEvent) => {
-    if (!isGesturable(e)) return;
     if (handle?.beforeEvent && !handle.beforeEvent(e)) return;
     sx = e.clientX;
     sy = e.clientY;
@@ -52,7 +51,6 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
   };
 
   const onMove:any = (e: PointerEvent) => {
-    if (!isGesturable(e)) return;
     if (handle?.beforeEvent && !handle.beforeEvent(e)) return;
     
     const dx = e.clientX - sx;
@@ -87,7 +85,6 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
   };
 
   const onUp:any = (e: PointerEvent) => {
-    if (!isGesturable(e)) return;
     if (handle?.beforeEvent && !handle.beforeEvent(e)) return;
 
     const ex = e.clientX;
@@ -154,7 +151,6 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
   };
 
   const onCancel:any = (e: PointerEvent) => {
-    if (!isGesturable(e)) return;
     if (handle?.beforeEvent && !handle.beforeEvent(e)) return;
     if (handle.cancel) handle.cancel();
     handle?.afterEvent && handle.afterEvent(e);
