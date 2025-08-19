@@ -1,16 +1,34 @@
-let lockedElement:any = null;
+let lockedStack:any = [];
 
-export const isGesturable = (e:any) => {
-  if (!lockedElement) return true;
-  return e.target === lockedElement || lockedElement.contains(e.target);
+export const isGesturable = (e:any, last:boolean = false) => {
+  if (lockedStack.length == 0) return true;
+  if (last) {
+    let l = lockedStack[lockedStack.length - 1];
+    return e.target === l || l.contains(e.target);
+  }
+
+  for (let item of lockedStack) {
+    if (e.target === item ||  item.contains(e.target)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 export const lock = (target:any) => {
-  lockedElement = target;
+  lockedStack.push(target);
 }
 
-export const unlock = () => {
-  lockedElement = null;
+export const unlock = (target?:any) => {
+  if (!target) lockedStack.pop();
+  else {
+    lockedStack.splice(lockedStack.indexOf(target), 1);
+  }
+}
+
+export const unlockAll = () => {
+  lockedStack = [];
 }
 
 export const gesture = (box: EventTarget, handle: any = {}) => {
