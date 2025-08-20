@@ -1,4 +1,4 @@
-export declare const isGesturable: (target: any, last?: boolean) => any;
+export declare const isGesturable: (target: any) => boolean;
 export declare const scope: (target: any) => void;
 export declare const descope: (target?: any) => void;
 export declare const descopeAll: () => void;

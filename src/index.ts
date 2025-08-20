@@ -1,14 +1,9 @@
 let targetStack:any = [];
 
-export const isGesturable = (target:any, last:boolean = false) => {
+export const isGesturable = (target:any) => {
   if (targetStack.length == 0) return true;
-  if (last) {
-    let l = targetStack[targetStack.length - 1];
-    return target === l || l.contains(target);
-  }
-
   for (let item of targetStack) {
-    if (target === item ||  item.contains(target)) {
+    if (target == item ||  item.contains(target)) {
       return true;
     }
   }

@@ -1,12 +1,8 @@
 let s = [];
-const A = (n, t = !1) => {
+const A = (n) => {
   if (s.length == 0) return !0;
-  if (t) {
-    let o = s[s.length - 1];
-    return n === o || o.contains(n);
-  }
-  for (let o of s)
-    if (n === o || o.contains(n))
+  for (let t of s)
+    if (n == t || t.contains(n))
       return !0;
   return !1;
 }, C = (n) => {
@@ -20,58 +16,58 @@ const A = (n, t = !1) => {
 }, O = () => {
   s = [];
 }, S = (n, t = {}) => {
-  let o, c, a;
-  const w = t?.options?.minDist || 0, g = t?.options?.maxDuration || 280, y = t?.options?.minVelocity || 0.5, L = (e) => {
-    t?.beforeEvent && !t.beforeEvent(e) || (o = e.clientX, c = e.clientY, a = performance.now(), t.down && t.down({ sx: o, sy: c, st: a, e }), t?.afterEvent && t.afterEvent(e));
+  let i, c, a;
+  const y = t?.options?.minDist || 0, x = t?.options?.maxDuration || 280, L = t?.options?.minVelocity || 0.5, l = (e) => {
+    t?.beforeEvent && !t.beforeEvent(e) || (i = e.clientX, c = e.clientY, a = performance.now(), t.down && t.down({ sx: i, sy: c, st: a, e }), t?.afterEvent && t.afterEvent(e));
   }, X = (e) => {
     if (t?.beforeEvent && !t.beforeEvent(e)) return;
-    const f = e.clientX - o, v = e.clientY - c, u = Math.abs(f), i = Math.abs(v);
-    let r;
-    (u >= 0 || i >= 0) && (u > i ? r = f > 0 ? "right" : "left" : r = v > 0 ? "down" : "up"), t.move && t.move({
-      d: r,
+    const f = e.clientX - i, v = e.clientY - c, u = Math.abs(f), r = Math.abs(v);
+    let o;
+    (u >= 0 || r >= 0) && (u > r ? o = f > 0 ? "right" : "left" : o = v > 0 ? "down" : "up"), t.move && t.move({
+      d: o,
       ex: e.clientX,
       ey: e.clientY,
       e,
-      sx: o,
+      sx: i,
       sy: c,
       dx: f,
       dy: v
     }), t?.afterEvent && t.afterEvent(e);
   }, Y = (e) => {
     if (t?.beforeEvent && !t.beforeEvent(e)) return;
-    const f = e.clientX, v = e.clientY, u = performance.now(), i = f - o, r = v - c, m = u - a, p = Math.abs(i), E = Math.abs(r);
-    if (t.fast && m <= g && (p >= w || E >= w)) {
-      const M = p / m, x = E / m;
-      if (M >= y || x >= y) {
-        let b;
-        p > E ? b = i > 0 ? "right" : "left" : b = r > 0 ? "down" : "up", t.fast({
+    const f = e.clientX, v = e.clientY, u = performance.now(), r = f - i, o = v - c, m = u - a, p = Math.abs(r), E = Math.abs(o);
+    if (t.fast && m <= x && (p >= y || E >= y)) {
+      const M = p / m, g = E / m;
+      if (M >= L || g >= L) {
+        let w;
+        p > E ? w = r > 0 ? "right" : "left" : w = o > 0 ? "down" : "up", t.fast({
           e,
-          d: b,
-          dx: i,
-          dy: r,
+          d: w,
+          dx: r,
+          dy: o,
           dt: m,
           vx: M,
-          vy: x
+          vy: g
         }), t?.afterEvent && t.afterEvent(e);
         return;
       }
     }
-    let l;
-    (p >= 0 || E >= 0) && (p > E ? l = i > 0 ? "right" : "left" : l = r > 0 ? "down" : "up"), t.up && t.up({
-      d: l,
+    let b;
+    (p >= 0 || E >= 0) && (p > E ? b = r > 0 ? "right" : "left" : b = o > 0 ? "down" : "up"), t.up && t.up({
+      d: b,
       e,
       ex: f,
       ey: v,
-      sx: o,
+      sx: i,
       sy: c,
-      dx: i,
-      dy: r
+      dx: r,
+      dy: o
     }), t?.afterEvent && t.afterEvent(e);
   }, D = (e) => {
     t?.beforeEvent && !t.beforeEvent(e) || (t.cancel && t.cancel(), t?.afterEvent && t.afterEvent(e));
   };
-  return n.addEventListener("pointerdown", L), n.addEventListener("pointermove", X), n.addEventListener("pointerup", Y), n.addEventListener("pointercancel", D), { destroy: () => {
-    n.removeEventListener("pointerdown", L), n.removeEventListener("pointermove", X), n.removeEventListener("pointerup", Y), n.removeEventListener("pointercancel", D);
+  return n.addEventListener("pointerdown", l), n.addEventListener("pointermove", X), n.addEventListener("pointerup", Y), n.addEventListener("pointercancel", D), { destroy: () => {
+    n.removeEventListener("pointerdown", l), n.removeEventListener("pointermove", X), n.removeEventListener("pointerup", Y), n.removeEventListener("pointercancel", D);
   }, cancel: () => {
     t.cancel && t.cancel();
   } };
