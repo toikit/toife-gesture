@@ -31,7 +31,8 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
   let sx: number, sy: number, st: number;
   // let isDragging = false;
 
-  const minDist = handle?.options?.minDist || 0; // px
+  const minMove = handle?.options?.minMove || 5; // px
+  const minDist = handle?.options?.minDist || 60; // px
   const maxDuration = handle?.options?.maxDuration || 280; // ms
   const minVelocity = handle?.options?.minVelocity || 0.5; // px/ms
 
@@ -57,7 +58,7 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
 
     // normal up
     let d: "left" | "right" | "up" | "down" | undefined;
-    if (absX >= 0 || absY >= 0) {
+    if (absX >= minMove || absY >= minMove) {
       if (absX > absY) {
         d = dx > 0 ? "right" : "left";
       } else {
@@ -124,7 +125,7 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
 
     // normal up
     let d: "left" | "right" | "up" | "down" | undefined;
-    if (absX >= 0 || absY >= 0) {
+    if (absX >= minMove || absY >= minMove) {
       if (absX > absY) {
         d = dx > 0 ? "right" : "left";
       } else {
