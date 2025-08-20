@@ -1,70 +1,70 @@
-let s = [];
-const A = (n) => {
-  if (s.length == 0) return !0;
-  for (let t of s)
+let i = [];
+const m = (n) => {
+  if (i.length == 0) return !0;
+  for (let t of i)
     if (n == t || t.contains(n))
       return !0;
   return !1;
 }, C = (n) => {
-  s.push(n);
+  i.push(n);
 }, G = (n) => {
-  if (!n) s.pop();
+  if (!n) i.pop();
   else {
-    let t = s.indexOf(n);
-    t > -1 && s.splice(t, 1);
+    let t = i.indexOf(n);
+    t > -1 && i.splice(t, 1);
   }
 }, O = () => {
-  s = [];
+  i = [];
 }, S = (n, t = {}) => {
-  let i, c, a;
-  const y = t?.options?.minDist || 0, x = t?.options?.maxDuration || 280, L = t?.options?.minVelocity || 0.5, l = (e) => {
-    t?.beforeEvent && !t.beforeEvent(e) || (i = e.clientX, c = e.clientY, a = performance.now(), t.down && t.down({ sx: i, sy: c, st: a, e }), t?.afterEvent && t.afterEvent(e));
+  let s, c, b;
+  const g = t?.options?.minDist || 0, V = t?.options?.maxDuration || 280, L = t?.options?.minVelocity || 0.5, l = (e) => {
+    m(e.target) && (t?.beforeEvent && !t.beforeEvent(e) || (s = e.clientX, c = e.clientY, b = performance.now(), t.down && t.down({ sx: s, sy: c, st: b, e }), t?.afterEvent && t.afterEvent(e)));
   }, X = (e) => {
-    if (t?.beforeEvent && !t.beforeEvent(e)) return;
-    const f = e.clientX - i, v = e.clientY - c, u = Math.abs(f), r = Math.abs(v);
-    let o;
-    (u >= 0 || r >= 0) && (u > r ? o = f > 0 ? "right" : "left" : o = v > 0 ? "down" : "up"), t.move && t.move({
-      d: o,
+    if (!m(e.target) || t?.beforeEvent && !t.beforeEvent(e)) return;
+    const f = e.clientX - s, v = e.clientY - c, E = Math.abs(f), o = Math.abs(v);
+    let r;
+    (E >= 0 || o >= 0) && (E > o ? r = f > 0 ? "right" : "left" : r = v > 0 ? "down" : "up"), t.move && t.move({
+      d: r,
       ex: e.clientX,
       ey: e.clientY,
       e,
-      sx: i,
+      sx: s,
       sy: c,
       dx: f,
       dy: v
     }), t?.afterEvent && t.afterEvent(e);
   }, Y = (e) => {
-    if (t?.beforeEvent && !t.beforeEvent(e)) return;
-    const f = e.clientX, v = e.clientY, u = performance.now(), r = f - i, o = v - c, m = u - a, p = Math.abs(r), E = Math.abs(o);
-    if (t.fast && m <= x && (p >= y || E >= y)) {
-      const M = p / m, g = E / m;
-      if (M >= L || g >= L) {
-        let w;
-        p > E ? w = r > 0 ? "right" : "left" : w = o > 0 ? "down" : "up", t.fast({
+    if (!m(e.target) || t?.beforeEvent && !t.beforeEvent(e)) return;
+    const f = e.clientX, v = e.clientY, E = performance.now(), o = f - s, r = v - c, a = E - b, p = Math.abs(o), u = Math.abs(r);
+    if (t.fast && a <= V && (p >= g || u >= g)) {
+      const M = p / a, x = u / a;
+      if (M >= L || x >= L) {
+        let y;
+        p > u ? y = o > 0 ? "right" : "left" : y = r > 0 ? "down" : "up", t.fast({
           e,
-          d: w,
-          dx: r,
-          dy: o,
-          dt: m,
+          d: y,
+          dx: o,
+          dy: r,
+          dt: a,
           vx: M,
-          vy: g
+          vy: x
         }), t?.afterEvent && t.afterEvent(e);
         return;
       }
     }
-    let b;
-    (p >= 0 || E >= 0) && (p > E ? b = r > 0 ? "right" : "left" : b = o > 0 ? "down" : "up"), t.up && t.up({
-      d: b,
+    let w;
+    (p >= 0 || u >= 0) && (p > u ? w = o > 0 ? "right" : "left" : w = r > 0 ? "down" : "up"), t.up && t.up({
+      d: w,
       e,
       ex: f,
       ey: v,
-      sx: i,
+      sx: s,
       sy: c,
-      dx: r,
-      dy: o
+      dx: o,
+      dy: r
     }), t?.afterEvent && t.afterEvent(e);
   }, D = (e) => {
-    t?.beforeEvent && !t.beforeEvent(e) || (t.cancel && t.cancel(), t?.afterEvent && t.afterEvent(e));
+    m(e.target) && (t?.beforeEvent && !t.beforeEvent(e) || (t.cancel && t.cancel(), t?.afterEvent && t.afterEvent(e)));
   };
   return n.addEventListener("pointerdown", l), n.addEventListener("pointermove", X), n.addEventListener("pointerup", Y), n.addEventListener("pointercancel", D), { destroy: () => {
     n.removeEventListener("pointerdown", l), n.removeEventListener("pointermove", X), n.removeEventListener("pointerup", Y), n.removeEventListener("pointercancel", D);
@@ -76,6 +76,6 @@ export {
   G as descope,
   O as descopeAll,
   S as gesture,
-  A as isGesturable,
+  m as isGesturable,
   C as scope
 };
