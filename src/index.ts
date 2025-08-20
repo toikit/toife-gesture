@@ -1,32 +1,3 @@
-let targetStack:any = [];
-
-export const isGesturable = (target:any) => {
-  if (targetStack.length == 0) return true;
-  for (let item of targetStack) {
-    if (target == item ||  item.contains(target)) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-export const scope = (target:any) => {
-  targetStack.push(target);
-}
-
-export const descope = (target?:any) => {
-  if (!target) targetStack.pop();
-  else {
-    let index = targetStack.indexOf(target);
-    if (index > -1) targetStack.splice(index, 1);
-  }
-}
-
-export const descopeAll = () => {
-  targetStack = [];
-}
-
 export const gesture = (box: EventTarget, handle: any = {}) => {
   let sx: number, sy: number, st: number;
   // let isDragging = false;
@@ -38,7 +9,6 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
 
   // ==== HANDLERS ==== //
   const onDown:any = (e: PointerEvent) => {
-    if (!isGesturable(e.target)) return;
     if (handle?.beforeEvent && !handle.beforeEvent(e)) return;
     sx = e.clientX;
     sy = e.clientY;
@@ -48,7 +18,6 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
   };
 
   const onMove:any = (e: PointerEvent) => {
-    if (!isGesturable(e.target)) return;
     if (handle?.beforeEvent && !handle.beforeEvent(e)) return;
     
     const dx = e.clientX - sx;
@@ -83,7 +52,6 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
   };
 
   const onUp:any = (e: PointerEvent) => {
-    if (!isGesturable(e.target)) return;
     if (handle?.beforeEvent && !handle.beforeEvent(e)) return;
 
     const ex = e.clientX;
@@ -150,7 +118,6 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
   };
 
   const onCancel:any = (e: PointerEvent) => {
-    if (!isGesturable(e.target)) return;
     if (handle?.beforeEvent && !handle.beforeEvent(e)) return;
     if (handle.cancel) handle.cancel();
     handle?.afterEvent && handle.afterEvent(e);
