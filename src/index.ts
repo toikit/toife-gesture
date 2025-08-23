@@ -9,6 +9,7 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
 
   // ==== HANDLERS ==== //
   const onDown:any = (e: PointerEvent) => {
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
     if (handle?.beforeEvent && !handle.beforeEvent(e)) return;
     sx = e.clientX;
     sy = e.clientY;
@@ -52,6 +53,7 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
   };
 
   const onUp:any = (e: PointerEvent) => {
+    (e.target as HTMLElement).releasePointerCapture(e.pointerId);
     if (handle?.beforeEvent && !handle.beforeEvent(e)) return;
 
     const ex = e.clientX;
@@ -118,6 +120,7 @@ export const gesture = (box: EventTarget, handle: any = {}) => {
   };
 
   const onCancel:any = (e: PointerEvent) => {
+    (e.target as HTMLElement).releasePointerCapture(e.pointerId);
     if (handle?.beforeEvent && !handle.beforeEvent(e)) return;
     if (handle.cancel) handle.cancel();
     handle?.afterEvent && handle.afterEvent(e);
